@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "one-india-platform": {
+      "type": "http",
+      "url": "https://1-india-loyalty-six.vercel.app/mcp"
+    }
+  }
+}

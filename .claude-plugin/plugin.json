@@ -1,0 +1,21 @@
+{
+  "name": "one-india-platform",
+  "displayName": "1 India Reports",
+  "version": "0.1.0",
+  "description": "Read approved 1 India sales, stock and target summaries with your own platform login and explicit AI access.",
+  "author": {
+    "name": "1 India",
+    "url": "https://1-india-loyalty-six.vercel.app",
+    "email": "saurabh.singh@1018mb.com"
+  },
+  "homepage": "https://1-india-loyalty-six.vercel.app/ai-connect",
+  "keywords": [
+    "retail",
+    "sales",
+    "stock",
+    "targets"
+  ],
+  "repository": "https://github.com/kingsds/one-india-reports-plugin",
+  "license": "MIT",
+  "icon": "./assets/icon.png"
+}
