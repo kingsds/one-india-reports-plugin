@@ -33,8 +33,9 @@ Never paste a password, MFA code, token or service key into chat. On Claude
 Team or Enterprise, an Owner also adds the remote connector for the
 organization; each person connects with their own account.
 
-This release supports the hosted Claude account connection. Direct native
-Claude Code OAuth uses different callback addresses and is not enabled yet.
+The server supports hosted Claude callbacks and native Claude Code loopback
+callbacks at `http://localhost:PORT/callback` and `http://127.0.0.1:PORT/callback`.
+The full registered address stays bound to the connection, including its port.
 Public directory review and publisher verification remain pending; this
 repository does not establish an approved listing or authenticated client test.
 
