@@ -5,8 +5,10 @@
 Read approved 1 India retail sales, stock and target summaries through Claude,
 using your own platform account. This small package contains a remote MCP
 connection, a reporting skill and the brand icon. It contains no platform
-server code, business records or shared credentials. The MIT license applies
-to this package; the hosted platform and its data are separate.
+server code, business records or shared credentials. MIT covers the reporting
+skill, connector/plugin manifests and supporting documentation. The hosted
+platform, business data, assets/icon.png and 1 India branding/trademarks are
+excluded from that license grant. No trademark rights are granted.
 
 ## Account requirements
 
@@ -78,5 +80,7 @@ Provider references: [Claude plugin installation](https://claude.com/docs/plugin
 [remote connector setup](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp),
 and [directory review](https://claude.com/docs/directory/publish).
 
-License: [MIT](./LICENSE), copyright 2026 kingsds. Publishing these instructions
-does not make the private platform repository or its data public.
+License: [MIT](./LICENSE), copyright 2026 kingsds, for the skill, manifests and
+supporting documentation only. The icon, branding, trademarks, hosted platform
+and business data are excluded. Publishing these instructions does not make
+the private platform repository or its data public.
