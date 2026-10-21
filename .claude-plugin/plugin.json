@@ -17,5 +17,7 @@
   ],
   "repository": "https://github.com/kingsds/one-india-reports-plugin",
   "license": "MIT",
-  "icon": "./assets/icon.png"
+  "icon": "./assets/icon.png",
+  "documentationUrl": "https://github.com/kingsds/one-india-reports-plugin#connect-in-claude",
+  "supportUrl": "https://github.com/kingsds/one-india-reports-plugin#support-and-documentation"
 }
