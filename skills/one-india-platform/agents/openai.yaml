@@ -1,0 +1,11 @@
+interface:
+  display_name: "1 India Reports"
+  short_description: "Read approved 1 India reports with your own login"
+  default_prompt: "Use $one-india-platform to check my AI access and summarize sales for my approved stores."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "one-india-platform"
+      description: "Private approved-account connector for 1 India reports"
+      transport: "streamable_http"
+      url: "https://1-india-loyalty-six.vercel.app/mcp"

@@ -1,0 +1,17 @@
+{
+  "name": "one-india",
+  "owner": {
+    "name": "1 India",
+    "email": "saurabh.singh@1018mb.com"
+  },
+  "plugins": [
+    {
+      "name": "one-india-platform",
+      "source": "./",
+      "description": "Approved retail reporting and confirmed unanswered-question feedback."
+    }
+  ],
+  "metadata": {
+    "description": "1 India Reports: scoped retail analytics and confirmed report-question feedback."
+  }
+}

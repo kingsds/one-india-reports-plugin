@@ -1,0 +1,43 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "one-india-platform",
+  "version": "0.2.0",
+  "description": "Read approved retail sales, stock by category, target trends and category sell-through; optionally share confirmed unanswered questions.",
+  "author": {
+    "name": "1 India",
+    "url": "https://1-india-loyalty-six.vercel.app",
+    "email": "saurabh.singh@1018mb.com"
+  },
+  "homepage": "https://1-india-loyalty-six.vercel.app/ai-connect",
+  "keywords": [
+    "retail",
+    "sales",
+    "stock",
+    "targets",
+    "sell-through",
+    "merchandising"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "1 India Reports",
+        "shortDescription": "Approved retail reports",
+        "longDescription": "Read your approved stores' sales, category stock, targets, footfall and category sell-through. Share a short unanswered question with the connector owner only after confirming the exact summary. Your own login, selected reports and store scope are required.",
+        "developerName": "1 India",
+        "category": "Productivity",
+        "capabilities": [
+          "Read approved retail reports"
+        ],
+        "websiteURL": "https://1-india-loyalty-six.vercel.app",
+        "defaultPrompt": [
+          "Check my 1 India AI access and show the reports and stores I can use.",
+          "Compare sales against targets and category sell-through for one approved store last week.",
+          "Show me a redacted summary of any unanswered report question and ask before saving it."
+        ],
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      }
+    }
+  },
+  "license": "MIT"
+}

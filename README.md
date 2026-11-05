@@ -1,8 +1,8 @@
-# 1 India Reports
+# 1 India Reports for Claude, ChatGPT and Codex
 
 ![1 India icon](./assets/icon.png)
 
-Read approved 1 India retail sales, stock and target summaries through Claude,
+Read approved 1 India retail sales, category stock, target trends and category sell-through through Claude,
 using your own platform account. This small package contains a remote MCP
 connection, a reporting skill and the brand icon. It contains no platform
 server code, business records or shared credentials. MIT covers the reporting
@@ -10,26 +10,73 @@ skill, connector/plugin manifests and supporting documentation. The hosted
 platform, business data, assets/icon.png and 1 India branding/trademarks are
 excluded from that license grant. No trademark rights are granted.
 
+
+## Download version 0.2.0
+
+- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.2.0/one-india-claude-plugin.zip)
+- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.2.0/one-india-openai-plugin.zip)
+
+For Claude, open **Customize > Plugins**, select the upload option and choose
+the Claude ZIP, then connect with your own 1 India account.
+
+For ChatGPT, open **Plugins > + > Add custom MCP server**, enter
+`https://1-india-loyalty-six.vercel.app/mcp`, choose OAuth and automatic
+registration, then create **1 India Reports** as a plugin. Install it and
+select it with `@` in a new chat. Availability depends on account and workspace
+policy. The OpenAI ZIP is a portable plugin package for supported import and
+local distribution surfaces; it is not a universal directory listing.
+
+### Codex and Claude Code marketplace source
+
+This repository includes a single-plugin marketplace for each client.
+
+Codex:
+
+```sh
+codex plugin marketplace add kingsds/one-india-reports-plugin
+codex plugin add one-india-platform@one-india
+```
+
+Claude Code:
+
+```sh
+claude plugin marketplace add kingsds/one-india-reports-plugin
+claude plugin install one-india-platform@one-india
+```
+
+Review the MCP sign-in request and approve only your permitted reports and
+stores. Installing a skill or marketplace does not establish an authenticated
+connection. Use `access_context` as the first test.
+
+References: [OpenAI packaging](https://developers.openai.com/plugins/build/plugins),
+[ChatGPT connection](https://developers.openai.com/plugins/deploy/connect-chatgpt),
+[Claude plugin installation](https://support.claude.com/en/articles/13837440-use-plugins-in-claude).
+
 ## Account requirements
 
 You need an existing 1 India admin or superadmin account that the connector
 owner has explicitly approved. Phone verification, a platform role or plugin
 installation alone does not grant AI access. Approved people must sign in,
-verify MFA, select allowed stores and reports, and approve each client's
+verify their registered email, select allowed stores and reports, and approve each client's
 separate OAuth connection. Customer and staff accounts are not enabled in this
 release. The server checks current permissions on every request.
 
 ## Connect in Claude
 
 1. Open [AI access settings](https://1-india-loyalty-six.vercel.app/ai-connect)
-   on the platform. Sign in, complete MFA and choose your reports and stores.
-2. Install this plugin through Claude's supported plugin flow. Open its
+   on the platform. Enter your approved account’s registered email, request the
+   code and enter its eight digits there. Choose your reports and stores, enable
+   read-only AI access and press **Save AI access**. An authenticator app is
+   optional for personal reporting; existing verified MFA sessions also work.
+2. Open **Customize > Plugins**, choose the upload option and select
+   `one-india-claude-plugin.zip`. Open its
    **Connectors** tab and connect **1 India Reports**. If adding the connector
    directly, use `https://1-india-loyalty-six.vercel.app/mcp`.
 3. Choose OAuth and **Register automatically** when asked. Review the listed
    reports and locations before approving consent on the platform's own page.
 
-Never paste a password, MFA code, token or service key into chat. On Claude
+Never paste a password, email/MFA code, token or service key into chat. Owner
+account approvals still require MFA. On Claude
 Team or Enterprise, an Owner also adds the remote connector for the
 organization; each person connects with their own account.
 
@@ -41,8 +88,14 @@ repository does not establish an approved listing or authenticated client test.
 
 ## Reports and limits
 
-The tools are `access_context`, `sales_summary`, `stock_summary` and
-`targets_summary`. Reports are read-only and contain fixed aggregate fields.
+The report tools are `access_context`, `sales_summary`, `sales_trends`,
+`stock_summary`, `stock_by_category`, `targets_summary`, `target_trends`,
+`footfall_summary` and `category_sell_through`. Available tools depend on your
+selected permissions. Reports contain fixed aggregate fields.
+The separate `save_unanswered_question` action stores a short redacted summary
+for the owner only after you confirm the exact text. It does not copy chat
+history or grant extra report access. Saved summaries expire 90 days after last
+submission.
 Customer identities and contacts, costs, margins, vendor terms, raw exports,
 financial changes, stock adjustments and account administration are excluded.
 Only active retail locations appear; warehouse and head office are excluded.
@@ -64,6 +117,8 @@ Changing selections invalidates existing grants, so reconnect afterward.
 - "Summarize yesterday's sales, bill count and units for my approved stores."
 - "Show the latest available stock summary for my approved stores, with the snapshot date and any missing locations."
 - "Compare this month's sales against targets for my approved stores, and explain missing or stale data."
+- "For one approved store, compare last week's sales against target, average bill value and category sell-through. Flag missing data."
+- "If a report cannot answer my business question, show a redacted summary and ask before saving it for the owner."
 
 The client asks for dates or locations when needed. An access denial or missing
 report is a boundary; the plugin must not substitute raw database access or
@@ -73,7 +128,7 @@ another person's account.
 
 For setup or access help, contact the publisher at
 [saurabh.singh@1018mb.com](mailto:saurabh.singh@1018mb.com). Include the problem
-and client name, and leave passwords, MFA codes, tokens and business data out of
+and client name, and leave passwords, email/MFA codes, tokens and business data out of
 support messages. Review your permissions at
 [AI access settings](https://1-india-loyalty-six.vercel.app/ai-connect).
 

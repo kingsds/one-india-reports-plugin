@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "one-india-platform": {
+      "type": "streamable-http",
+      "url": "https://1-india-loyalty-six.vercel.app/mcp"
+    }
+  }
+}
