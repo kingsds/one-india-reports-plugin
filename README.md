@@ -11,10 +11,10 @@ platform, business data, assets/icon.png and 1 India branding/trademarks are
 excluded from that license grant. No trademark rights are granted.
 
 
-## Download version 0.3.0
+## Download version 0.4.0
 
-- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.3.0/one-india-claude-plugin.zip)
-- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.3.0/one-india-openai-plugin.zip)
+- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.4.0/one-india-claude-plugin.zip)
+- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.4.0/one-india-openai-plugin.zip)
 
 For Claude, open **Customize > Plugins**, select the upload option and choose
 the Claude ZIP, then connect with your own 1 India account.
@@ -160,3 +160,22 @@ age. Scanned stock does not establish a truck booking, loading or departure.
 
 Installing or updating the plugin does not remove coding or developer tools.
 The reporting connection keeps its own approved scope and expiry.
+
+
+## New in 0.4.0: monthly salary and rent
+
+`salaries_monthly` reads monthly location totals or scoped individual payroll
+for people on the platform's named salary-access list. A generic admin or
+superadmin role does not grant salary access. The live salary-list grant,
+selected MCP report, approved store scope and client consent are all required.
+`rent_monthly` reads monthly Finance booked rent. Choose these reports on AI
+Connect, save and reconnect; existing grants do not expand automatically.
+
+Clarify payroll versus Finance Manpower Cost, gross earned/net take-home/fixed
+monthly pay, calendar month range and location scope. Reimbursements stay
+separate. Missing months remain null; a partial company result has an available
+subtotal rather than a fabricated complete total. Booked rent does not prove
+payment or contractual rent. Company scope is the current active retail cohort
+plus HO and warehouse, and needs all active retail stores approved.
+Individual salary results may include employee names/codes and pay, but no bank,
+tax identifiers, contact fields or raw detail maps. No business edits or exports.

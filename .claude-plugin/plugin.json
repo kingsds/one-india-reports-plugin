@@ -1,8 +1,8 @@
 {
   "name": "one-india-platform",
   "displayName": "1 India Reports",
-  "version": "0.3.0",
-  "description": "Read approved retail sales, stock ageing and values, dispatch progress, purchase-cohort sell-through and catalogue photos; clarify ambiguous questions first.",
+  "version": "0.4.0",
+  "description": "Read approved retail sales, stock ageing and values, dispatch progress, purchase-cohort sell-through, catalogue photos, monthly salary and booked rent; named salary approval required.",
   "author": {
     "name": "1 India",
     "url": "https://1-india-loyalty-six.vercel.app",

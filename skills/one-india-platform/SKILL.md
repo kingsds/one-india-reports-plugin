@@ -1,6 +1,6 @@
 ---
 name: one-india-platform
-description: Use the connected 1 India MCP connector to check AI access and answer approved retail sales, stock value and ageing, dispatch readiness, receipt-cohort performance and catalogue photo questions, and save confirmed report gaps. Requires an owner-approved admin or superadmin account; other platform roles are planned. Excludes repository development and database administration.
+description: Use the connected 1 India MCP connector to check AI access and answer approved retail sales, stock value and ageing, dispatch readiness, receipt-cohort performance catalogue photo, monthly salary and rent questions, and save confirmed report gaps. Requires an owner-approved admin or superadmin account; other platform roles are planned. Excludes repository development and database administration.
 ---
 
 # 1 India platform assistant
@@ -60,7 +60,8 @@ reports. Customer contact details, individual customer records,
 margins, vendor commercial terms, raw records and bulk exports are
 outside the report allowlist. Costs and order values are available only through
 the separately opted-in inventory_health, dispatch_readiness and
-merchandise_performance tools. Do not reconstruct an excluded field
+merchandise_performance and monthly-cost tools. Salary visibility additionally
+requires the current named salary-list grant; admin/superadmin alone is insufficient. Do not reconstruct an excluded field
 or bulk export through repeated queries.
 
 Money changes, stock adjustments, account/role changes, outbound messages,
@@ -76,7 +77,8 @@ ask the user to disclose an email or MFA code in chat.
 The pilot tools are `access_context`, `sales_summary`, `sales_trends`,
 `stock_summary`, `stock_by_category`, `targets_summary`, `target_trends`,
 `footfall_summary`, `category_sell_through`, `inventory_health`,
-`dispatch_readiness`, `merchandise_performance` and `catalogue_styles`. Discovery advertises
+`dispatch_readiness`, `merchandise_performance`, `catalogue_styles`,
+`salaries_monthly` and `rent_monthly`. Discovery advertises
 only currently permitted reports.
 Do not assume another platform feature has a tool. Use only explicit store IDs
 returned by the current access context. Reports expose fixed aggregate fields.
@@ -183,6 +185,41 @@ names, colours, sizes, MRP and approved photo URLs. Show returned photos in
 Markdown when the client supports it; never invent a photo or product name.
 Check rowCount/offset and disclose a partial page instead of treating it as all
 styles. Never turn bounded pagination into a bulk export.
+
+## Monthly salaries and rent
+
+Use `salaries_monthly` and `rent_monthly` with explicit calendar months and
+location scope: selected stores, all current retail stores, HO, warehouse/DC,
+or company (current active retail cohort plus HO and warehouse). HO, warehouse,
+company and all-store requests require every active retail store in the grant.
+Never count HO or the warehouse as a retail store. Historical closed-store costs
+are outside this current-store cohort and must not be implied in company totals.
+
+First clarify what “salary” means: actual payroll gross earned, net take-home,
+fixed monthly pay before unpaid leave, or Finance Manpower Cost. These are
+separate measures. Reimbursements are separate from salary. Monthly Finance
+amounts are converted from lakhs to rupees; results are INR. `rent_monthly`
+returns booked Finance expense, not lease-agreement rent or proof of payment.
+Offer no figures for an unsupported payment/contract question.
+
+Salary tools require the platform's live named salary-access approval in
+addition to MCP consent. They can return employee names/codes and individual
+monthly pay when authorized. Use resolve with employeeQuery to find candidates
+within the approved locations; ask which employee when ambiguous, then use the
+exact employeeCode and groupBy=employee. Never reveal bank details, tax
+identifiers, contact details, arbitrary payroll maps or a bulk export. A salary
+permission denial is a boundary; do not try Finance or another connection as a
+way to retrieve denied payroll. Distinct Finance cost questions need their own
+explicit source interpretation and still respect the salary-tool grant.
+
+For missing months, show null/missing and the available source months. Never
+reuse the prior month's pay, substitute a cost master, extrapolate or call
+missing data zero. Actual recorded zero remains zero. HO/DC payroll and store
+payroll may have different latest uploaded months. Read full monthTotals and
+coverage even if location/employee rows are paginated; incomplete company data
+has an available subtotal and a null complete total. A register is not evidence
+of a bank transfer or that every employee was included. Use like-for-like
+source, pay basis and location cohort when comparing months or ranking costs.
 
 ## Unanswered report questions
 
