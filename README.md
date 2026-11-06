@@ -11,10 +11,10 @@ platform, business data, assets/icon.png and 1 India branding/trademarks are
 excluded from that license grant. No trademark rights are granted.
 
 
-## Download version 0.2.0
+## Download version 0.3.0
 
-- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.2.0/one-india-claude-plugin.zip)
-- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.2.0/one-india-openai-plugin.zip)
+- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.3.0/one-india-claude-plugin.zip)
+- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.3.0/one-india-openai-plugin.zip)
 
 For Claude, open **Customize > Plugins**, select the upload option and choose
 the Claude ZIP, then connect with your own 1 India account.
@@ -96,14 +96,14 @@ The separate `save_unanswered_question` action stores a short redacted summary
 for the owner only after you confirm the exact text. It does not copy chat
 history or grant extra report access. Saved summaries expire 90 days after last
 submission.
-Customer identities and contacts, costs, margins, vendor terms, raw exports,
+Customer identities and contacts, margins, vendor terms, raw exports,
 financial changes, stock adjustments and account administration are excluded.
-Only active retail locations appear; warehouse and head office are excluded.
+Standard reports use active retail locations. Separately approved company stock and purchase reports include active warehouse/head office stock and require every active retail store approved.
 Stock reports identify their source snapshot and freshness.
 
 Admin limits are 20 calls per minute and 500 per day. Superadmin limits are
 30 per minute and 1,000 per day. Both allow two concurrent calls, at most
-100 rows and a 31-day inclusive report range. Daily reset uses Asia/Kolkata.
+100 rows and a 31-day inclusive standard report range; purchase receipt cohorts allow up to 366 days. Daily reset uses Asia/Kolkata.
 The server's returned access context is authoritative. Do not split requests
 to bypass limits.
 
@@ -140,3 +140,23 @@ License: [MIT](./LICENSE), copyright 2026 kingsds, for the skill, manifests and
 supporting documentation only. The icon, branding, trademarks, hosted platform
 and business data are excluded. Publishing these instructions does not make
 the private platform repository or its data public.
+
+
+## New in 0.3.0
+
+Additional opt-in tools: `inventory_health` (units, costs and last-sale ageing),
+`dispatch_readiness` (scan/invoice progress and order-rate/MRP values),
+`merchandise_performance` (owned-stock receipt FIFO, Buying SOP and daily pace),
+and `catalogue_styles` (existing full names and photos). Existing grants keep
+their scope. Select the new reports on AI Connect, save, then reconnect and
+review consent. Inventory and purchase reports include confidential cost values.
+
+Ask Claude to clarify ambiguous receipt dates, category variants, brand/vendor
+matches, location scope and the benchmark before calculating. Single-store
+ageing uses only the selected approved store. Company stock/purchases require
+all active retail stores approved. SOR receipts are excluded from owned-stock
+FIFO and identified explicitly. Stock age since last sale differs from receipt
+age. Scanned stock does not establish a truck booking, loading or departure.
+
+Installing or updating the plugin does not remove coding or developer tools.
+The reporting connection keeps its own approved scope and expiry.

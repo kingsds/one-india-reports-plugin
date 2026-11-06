@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "one-india-platform",
-  "version": "0.2.0",
-  "description": "Read approved retail sales, stock by category, target trends and category sell-through; optionally share confirmed unanswered questions.",
+  "version": "0.3.0",
+  "description": "Read approved retail sales, stock ageing and values, dispatch progress, purchase-cohort sell-through and catalogue photos; clarify ambiguous questions first.",
   "author": {
     "name": "1 India",
     "url": "https://1-india-loyalty-six.vercel.app",

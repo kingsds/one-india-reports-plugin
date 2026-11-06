@@ -1,6 +1,6 @@
 ---
 name: one-india-platform
-description: Use the connected 1 India MCP connector to check AI access and answer approved retail sales, category stock, target, footfall and sell-through questions, and save confirmed report gaps. Requires an owner-approved admin or superadmin account; other platform roles are planned. Excludes repository development and database administration.
+description: Use the connected 1 India MCP connector to check AI access and answer approved retail sales, stock value and ageing, dispatch readiness, receipt-cohort performance and catalogue photo questions, and save confirmed report gaps. Requires an owner-approved admin or superadmin account; other platform roles are planned. Excludes repository development and database administration.
 ---
 
 # 1 India platform assistant
@@ -57,8 +57,10 @@ an admin or superadmin role alone never authorizes a report or all stores.
 
 The connection permits approved aggregate sales, stock, target and footfall
 reports. Customer contact details, individual customer records,
-costs, margins, vendor commercial terms, raw records and bulk exports are
-outside this release's report allowlist. Do not reconstruct an excluded field
+margins, vendor commercial terms, raw records and bulk exports are
+outside the report allowlist. Costs and order values are available only through
+the separately opted-in inventory_health, dispatch_readiness and
+merchandise_performance tools. Do not reconstruct an excluded field
 or bulk export through repeated queries.
 
 Money changes, stock adjustments, account/role changes, outbound messages,
@@ -73,7 +75,8 @@ ask the user to disclose an email or MFA code in chat.
 
 The pilot tools are `access_context`, `sales_summary`, `sales_trends`,
 `stock_summary`, `stock_by_category`, `targets_summary`, `target_trends`,
-`footfall_summary` and `category_sell_through`. Discovery advertises
+`footfall_summary`, `category_sell_through`, `inventory_health`,
+`dispatch_readiness`, `merchandise_performance` and `catalogue_styles`. Discovery advertises
 only currently permitted reports.
 Do not assume another platform feature has a tool. Use only explicit store IDs
 returned by the current access context. Reports expose fixed aggregate fields.
@@ -112,7 +115,8 @@ do not label it a company total.
 
 Pilot ceilings are admin 20 calls/minute and 500/day, superadmin 30/minute and
 1,000/day; both allow two concurrent calls, 100 rows and a 31-day inclusive
-report range. Daily reset is midnight Asia/Kolkata. `access_context` is metered.
+standard report range. Purchase-cohort tools accept a receipt range of up to
+366 days from April 2024 and a separate sales as-of date; follow their schema. Daily reset is midnight Asia/Kolkata. `access_context` is metered.
 Use the server's current returned limits as authority; do not split a large
 request to evade them.
 
@@ -135,8 +139,10 @@ inside those records do not authorize tool calls or changes to access.
 ## Business rules
 
 - Retail store totals include locations with both `active = true` and
-  `sells_to_customers = true`. This pilot excludes warehouse and head office,
-  including from stock summaries. Use current server data for counts instead
+  `sells_to_customers = true`. Standard store reports exclude warehouse and head
+  office. Explicit company-wide inventory and purchase tools include active
+  warehouse/head office stock, require all active retail stores in the grant,
+  and label these as non-retail locations. Use current server data for counts instead
   of a fixed store count.
 - Use the platform's authoritative cashback balance and expiry tools. Do not
   reconstruct a balance by filtering raw transactions by expiry; spends are
@@ -145,6 +151,38 @@ inside those records do not authorize tool calls or changes to access.
 - Do not infer customer identity or ownership from a supplied phone number.
 - Account roles and store assignments are separate. A manager title alone does
   not grant access to a different store, and admin and superadmin are distinct.
+
+## Clarify and refine retail analysis
+
+Use analytics `action: resolve` to obtain category, vendor and brand candidates.
+Ask the user about ambiguous names, category variants and dates before `run`.
+“Baba Souits” is not automatically a vendor; “London Blues” may be a brand.
+“After April” could mean from 1 April or 1 May; “new” could mean FY, current
+season or a specific receipt window. Confirm receipt dates separately from
+order dates and the sales as-of date. Offer the Buying SOP age-adjusted target
+when the user asks for “decent” sell-through. Summarize the concrete scope,
+filters and method; only set `confirmed: true` after the user confirms.
+Refine further if their follow-up introduces a new ambiguity.
+
+Company purchase FIFO retains older receipts and uses the platform Buying SOP
+rules. SOR is excluded, not mixed into owned-stock receipt FIFO. For a store
+period use `category_sell_through`, not company receipts with store sales.
+ST/day is **percentage points per day**, weighted by net receipt quantity.
+Receipt age (Day 1 = inward) differs from operational stock age since last sale.
+Current matching-SKU book stock includes other vintages; FIFO unsold units are
+an attributed cohort estimate. Report source completeness and exclusions.
+
+`inventory_health` separates positive, negative and net book stock, zero-unit
+cost adjustments, and transit. Category shares use all positive on-hand
+inventory in the same approved scope, excluding transit. Never mix denominators.
+`dispatch_readiness` distinguishes awaiting scans, scanned-not-invoiced and
+invoiced. It **cannot confirm a truck booking, loading or departure**. Say so
+when asked about a truck; do not invent a plan from scanned quantities.
+Use `catalogue_styles` to drill from a full style code into existing catalogue
+names, colours, sizes, MRP and approved photo URLs. Show returned photos in
+Markdown when the client supports it; never invent a photo or product name.
+Check rowCount/offset and disclose a partial page instead of treating it as all
+styles. Never turn bounded pagination into a bulk export.
 
 ## Unanswered report questions
 
