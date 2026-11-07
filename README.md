@@ -11,10 +11,10 @@ platform, business data, assets/icon.png and 1 India branding/trademarks are
 excluded from that license grant. No trademark rights are granted.
 
 
-## Download version 0.4.0
+## Download version 0.5.0
 
-- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.4.0/one-india-claude-plugin.zip)
-- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.4.0/one-india-openai-plugin.zip)
+- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.5.0/one-india-claude-plugin.zip)
+- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.5.0/one-india-openai-plugin.zip)
 
 For Claude, open **Customize > Plugins**, select the upload option and choose
 the Claude ZIP, then connect with your own 1 India account.
@@ -161,6 +161,19 @@ age. Scanned stock does not establish a truck booking, loading or departure.
 Installing or updating the plugin does not remove coding or developer tools.
 The reporting connection keeps its own approved scope and expiry.
 
+
+## New in 0.5.0: faster, clearer, safer answers
+
+- Reports are marked read-only, so Claude and ChatGPT no longer ask for approval on every call.
+- Errors explain how to recover (for example, an end date after today is now reported as an argument problem, not an outage).
+- Omit `storeIds` to cover every store approved for the connection. Results name each store.
+- `access_context` shows the latest loaded bill and stock dates, so today's partial numbers are flagged.
+- Stock ageing uses actual last-sale dates per store (refreshed nightly). Category rows carry readable names.
+- Purchase-cohort sell-through now includes sales from stores that have since closed.
+- Targets keep stores with some missing target days (achievement withheld, `target_days` shown).
+- Wide result pages are shortened to fit, with `nextOffset`, instead of failing.
+- Individual pay is returned one employee at a time, and salary over AI needs an authenticator-app sign-in.
+- Owners can keep AI access for 1, 7 or 30 days.
 
 ## New in 0.4.0: monthly salary and rent
 

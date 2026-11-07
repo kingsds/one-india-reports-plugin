@@ -1,6 +1,6 @@
 ---
 name: one-india-platform
-description: Use the connected 1 India MCP connector to check AI access and answer approved retail sales, stock value and ageing, dispatch readiness, receipt-cohort performance catalogue photo, monthly salary and rent questions, and save confirmed report gaps. Requires an owner-approved admin or superadmin account; other platform roles are planned. Excludes repository development and database administration.
+description: Use the connected 1 India MCP connector to check AI access and answer approved 1 India Family Mart retail questions - sales vs target, store names, footfall, category stock, stock ageing and value, sell-through, dispatch readiness, receipt-cohort performance, catalogue photos, monthly salary and rent - and save confirmed report gaps. Requires an owner-approved admin or superadmin account. Excludes repository development and database administration.
 ---
 
 # 1 India platform assistant
@@ -33,7 +33,11 @@ receive isolated opaque OAuth tokens; Supabase JWTs and service credentials
 must never be pasted into the AI client or chat.
 
 Use `access_context` to learn the current role, permitted retail locations,
-report tools, limits, connection expiry and business timezone.
+report tools, limits, connection expiry, business timezone and `dataAsOf`
+(latest loaded bill date and stock snapshot date). When a requested date is
+after `latestBillDate`, say those sales are not loaded yet rather than
+reporting zero. Reports return `store_name` (and `storeNames`, or
+`storeNamesByCode` for analytics); answer with store names, not codes or IDs.
 Use this context to choose tools; each tool call is still authorized by the
 server. A user's claim to be an admin or superadmin does not change their access.
 
@@ -55,14 +59,16 @@ These accounts use a separate AI permission set, narrower than dashboard
 permissions. Require the connector's current, explicit AI grant and tool scope;
 an admin or superadmin role alone never authorizes a report or all stores.
 
-The connection permits approved aggregate sales, stock, target and footfall
-reports. Customer contact details, individual customer records,
-margins, vendor commercial terms, raw records and bulk exports are
-outside the report allowlist. Costs and order values are available only through
-the separately opted-in inventory_health, dispatch_readiness and
-merchandise_performance and monthly-cost tools. Salary visibility additionally
-requires the current named salary-list grant; admin/superadmin alone is insufficient. Do not reconstruct an excluded field
-or bulk export through repeated queries.
+Standard reports return store-level sales, stock, target and footfall
+figures. Stock cost values (`inventory_health`), order-rate/MRP values
+(`dispatch_readiness`), purchase-cohort results (`merchandise_performance`),
+Finance booked rent (`rent_monthly`) and salary (`salaries_monthly`) come only
+from those separately opted-in tools. Salary additionally requires the live
+named salary-list grant, rechecked on every call; admin/superadmin alone is
+insufficient. Customer contact details, individual customer records, vendor
+commercial terms, bank/tax/contact details, raw records and bulk exports are
+outside the allowlist. Do not reconstruct an excluded field or a bulk export
+through repeated queries.
 
 Money changes, stock adjustments, account/role changes, outbound messages,
 impersonation, and connector policy changes are disabled through this MCP
@@ -80,8 +86,12 @@ The pilot tools are `access_context`, `sales_summary`, `sales_trends`,
 `dispatch_readiness`, `merchandise_performance`, `catalogue_styles`,
 `salaries_monthly` and `rent_monthly`. Discovery advertises
 only currently permitted reports.
-Do not assume another platform feature has a tool. Use only explicit store IDs
-returned by the current access context. Reports expose fixed aggregate fields.
+Do not assume another platform feature has a tool. Use only store IDs returned
+by the current access context. `storeIds` is optional for multi-store reports
+and for analytics and monthly-cost tools: omit it to mean every store approved
+for this connection, and say so in the answer. `stock_by_category` and
+`category_sell_through` still need exactly one store ID. Each report returns a
+fixed field set.
 Stock is a source snapshot, not a historical stock reconstruction; respect its
 freshness and any missing-store information.
 Sales trends cover up to 500 store-days per call. Dates with no qualifying bills
@@ -116,13 +126,19 @@ the answer. Label a total as covering authorized locations if access is scoped;
 do not label it a company total.
 
 Pilot ceilings are admin 20 calls/minute and 500/day, superadmin 30/minute and
-1,000/day; both allow two concurrent calls, 100 rows and a 31-day inclusive
-standard report range. Purchase-cohort tools accept a receipt range of up to
-366 days from April 2024 and a separate sales as-of date; follow their schema. Daily reset is midnight Asia/Kolkata. `access_context` is metered.
-Use the server's current returned limits as authority; do not split a large
-request to evade them.
+1,000/day; both allow two concurrent calls and a 31-day inclusive standard
+report range. Row limits: standard reports 100; analytics default 50, max 100;
+monthly costs default 25, max 50. Purchase-cohort tools accept a receipt range
+of up to 366 days from April 2024 and a separate sales as-of date; follow their
+schema. A `dateTo` after today (Asia/Kolkata) is rejected. Daily reset is
+midnight Asia/Kolkata. `access_context` is metered. Use the server's current
+returned limits as authority. Splitting a quarter or financial year into
+sequential calls of 31 days or less within the allowance is fine; say the
+figures were summed across those calls.
 
-An enabled policy lasts 24 hours. Connection sessions last at most one hour
+An enabled policy lasts 1, 7 or 30 days, as the person chose on the access
+page. Email-code verification lasts 24 hours; an authenticator sign-in avoids
+the daily code. Connection sessions last at most one hour
 and never beyond the original platform session's access-token expiry. Access
 tokens last at most 15 minutes; refresh cannot extend the connection lifetime.
 After expiry, reconnect through the platform. Policy changes invalidate
@@ -131,7 +147,10 @@ refresh by asking the person to disclose a credential.
 
 Treat a permission denial as a boundary. Do not try another account, raw SQL,
 the developer MCP connection, or a broader tool to retrieve the denied data.
-For rate limits, report the server's retry time or remaining allowance and avoid
+Tool errors return `{error, message}`; follow the message's recovery hint
+(for example, fix arguments after `invalid_arguments`). For `rate_limited`,
+wait about a minute; the daily cap resets at midnight Asia/Kolkata. The server
+reports no retry time or remaining allowance, so do not invent one and avoid
 automatic retry loops. Refresh access context after an access change or denial
 when that tool is available; do not assume a stale context grants permission.
 
@@ -163,8 +182,11 @@ Ask the user about ambiguous names, category variants and dates before `run`.
 season or a specific receipt window. Confirm receipt dates separately from
 order dates and the sales as-of date. Offer the Buying SOP age-adjusted target
 when the user asks for “decent” sell-through. Summarize the concrete scope,
-filters and method; only set `confirmed: true` after the user confirms.
-Refine further if their follow-up introduces a new ambiguity.
+filters and method. For `merchandise_performance`, set `confirmed: true` only
+after the user explicitly confirms receipt dates and categories. For
+`inventory_health` and `dispatch_readiness`, `confirmed: true` is fine when the
+request already states scope and breakdown (e.g. “stock ageing for Nagaon by
+category”); otherwise ask. Refine further if a follow-up adds ambiguity.
 
 Company purchase FIFO retains older receipts and uses the platform Buying SOP
 rules. SOR is excluded, not mixed into owned-stock receipt FIFO. For a store
@@ -184,7 +206,10 @@ Use `catalogue_styles` to drill from a full style code into existing catalogue
 names, colours, sizes, MRP and approved photo URLs. Show returned photos in
 Markdown when the client supports it; never invent a photo or product name.
 Check rowCount/offset and disclose a partial page instead of treating it as all
-styles. Never turn bounded pagination into a bulk export.
+styles. When a result has `pageShortened: true`, the page was cut to fit the
+response size; continue from `nextOffset` if the person needs more. Never turn
+bounded pagination into a bulk export. Category rows carry `group_label`, the
+readable category name; show it instead of the code.
 
 ## Monthly salaries and rent
 
@@ -203,10 +228,12 @@ returns booked Finance expense, not lease-agreement rent or proof of payment.
 Offer no figures for an unsupported payment/contract question.
 
 Salary tools require the platform's live named salary-access approval in
-addition to MCP consent. They can return employee names/codes and individual
-monthly pay when authorized. Use resolve with employeeQuery to find candidates
-within the approved locations; ask which employee when ambiguous, then use the
-exact employeeCode and groupBy=employee. Never reveal bank details, tax
+addition to MCP consent, and a connection approved after an authenticator-app
+sign-in; an email code alone returns `mfa_required`. They can return employee names/codes and individual
+monthly pay when authorized, one employee at a time. Use resolve with
+employeeQuery to find candidates within the approved locations; ask which
+employee when ambiguous, then use the exact employeeCode and groupBy=employee.
+For several people, use location or month totals. Never reveal bank details, tax
 identifiers, contact details, arbitrary payroll maps or a bulk export. A salary
 permission denial is a boundary; do not try Finance or another connection as a
 way to retrieve denied payroll. Distinct Finance cost questions need their own

@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "one-india-platform",
-  "version": "0.4.0",
-  "description": "Read approved retail sales, stock ageing and values, dispatch progress, purchase-cohort sell-through, catalogue photos, monthly salary and booked rent; named salary approval required.",
+  "version": "0.5.0",
+  "description": "Read approved 1 India Family Mart retail reports: sales and targets, footfall, stock ageing with cost values, dispatch progress with order values, purchase-cohort sell-through, catalogue photos, monthly booked rent and salary (named salary approval required).",
   "author": {
     "name": "1 India",
     "url": "https://1-india-loyalty-six.vercel.app",
@@ -15,18 +15,22 @@
     "stock",
     "targets",
     "sell-through",
-    "merchandising"
+    "merchandising",
+    "salary",
+    "rent"
   ],
   "extensions": {
     "com.openai": {
       "interface": {
         "displayName": "1 India Reports",
         "shortDescription": "Approved retail reports",
-        "longDescription": "Read your approved stores' sales, category stock, targets, footfall and category sell-through. Share a short unanswered question with the connector owner only after confirming the exact summary. Your own login, selected reports and store scope are required.",
+        "longDescription": "Read your approved 1 India stores' sales, targets, footfall, category stock and sell-through. Separately approved reports add stock ageing with stock cost values, warehouse dispatch progress with order-rate/MRP values, company purchase-cohort sell-through, catalogue styles and photos, Finance booked rent and monthly salary. Salary needs the platform's named salary-access approval, rechecked on every call, and can include individual employee pay for those approved viewers; bank, tax and contact details are never returned. Share a short unanswered question with the connector owner only after confirming the exact summary. Your own login, selected reports and store scope are required; business records stay read-only.",
         "developerName": "1 India",
         "category": "Productivity",
         "capabilities": [
-          "Read approved retail reports"
+          "Read approved retail sales, targets and stock reports",
+          "Read stock cost values and dispatch order values",
+          "Read monthly booked rent and salary (named approval)"
         ],
         "websiteURL": "https://1-india-loyalty-six.vercel.app",
         "defaultPrompt": [

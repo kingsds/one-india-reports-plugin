@@ -8,10 +8,12 @@
     {
       "name": "one-india-platform",
       "source": "./",
-      "description": "Approved retail reporting and confirmed unanswered-question feedback."
+      "description": "Approved 1 India retail reports (sales, targets, stock ageing and cost values, dispatch, sell-through, catalogue, booked rent, named-approval salary) and confirmed unanswered-question feedback.",
+      "version": "0.5.0"
     }
   ],
   "metadata": {
-    "description": "1 India Reports: scoped retail analytics and confirmed report-question feedback."
+    "description": "1 India Reports: scoped, read-only retail, cost, rent and salary reports with confirmed report-question feedback.",
+    "version": "0.5.0"
   }
 }
