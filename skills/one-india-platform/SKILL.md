@@ -1,6 +1,6 @@
 ---
 name: one-india-platform
-description: Use the connected 1 India MCP connector to check AI access and answer approved 1 India Family Mart retail questions - sales vs target, store names, footfall, category stock, stock ageing and value, sell-through, dispatch readiness, receipt-cohort performance, catalogue photos, monthly salary and rent - and save confirmed report gaps. Requires an owner-approved admin or superadmin account. Excludes repository development and database administration.
+description: Use the connected 1 India MCP connector to check AI access and answer approved 1 India Family Mart retail questions - sales vs target, store names, footfall, category stock, stock ageing and value, sell-through, dispatch readiness, receipt-cohort performance, Inventory Intelligence and slow stock, catalogue photos, monthly sales vs last year, category sales, top styles, store P&L, loyalty summary, monthly salary and rent - and save confirmed report gaps. Requires an owner-approved admin or superadmin account. Excludes repository development and database administration.
 ---
 
 # 1 India platform assistant
@@ -62,8 +62,10 @@ an admin or superadmin role alone never authorizes a report or all stores.
 Standard reports return store-level sales, stock, target and footfall
 figures. Stock cost values (`inventory_health`), order-rate/MRP values
 (`dispatch_readiness`), purchase-cohort results (`merchandise_performance`),
-Finance booked rent (`rent_monthly`) and salary (`salaries_monthly`) come only
-from those separately opted-in tools. Salary additionally requires the live
+Inventory Intelligence costs (`inventory_intelligence`), store P&L margins and
+company loyalty liabilities (`business_performance`), Finance booked rent
+(`rent_monthly`) and salary (`salaries_monthly`) come only from those
+separately opted-in tools. Salary additionally requires the live
 named salary-list grant, rechecked on every call; admin/superadmin alone is
 insufficient. Customer contact details, individual customer records, vendor
 commercial terms, bank/tax/contact details, raw records and bulk exports are
@@ -84,7 +86,8 @@ The pilot tools are `access_context`, `sales_summary`, `sales_trends`,
 `stock_summary`, `stock_by_category`, `targets_summary`, `target_trends`,
 `footfall_summary`, `category_sell_through`, `inventory_health`,
 `dispatch_readiness`, `merchandise_performance`, `catalogue_styles`,
-`salaries_monthly` and `rent_monthly`. Discovery advertises
+`inventory_intelligence`, `business_performance`, `salaries_monthly` and
+`rent_monthly`. Discovery advertises
 only currently permitted reports.
 Do not assume another platform feature has a tool. Use only store IDs returned
 by the current access context. `storeIds` is optional for multi-store reports
@@ -132,9 +135,10 @@ monthly costs default 25, max 50. Purchase-cohort tools accept a receipt range
 of up to 366 days from April 2024 and a separate sales as-of date; follow their
 schema. A `dateTo` after today (Asia/Kolkata) is rejected. Daily reset is
 midnight Asia/Kolkata. `access_context` is metered. Use the server's current
-returned limits as authority. Splitting a quarter or financial year into
-sequential calls of 31 days or less within the allowance is fine; say the
-figures were summed across those calls.
+returned limits as authority. For quarter, financial-year or versus-last-year
+sales, prefer `business_performance` `monthly_sales` when it is permitted.
+Otherwise splitting the period into sequential calls of 31 days or less within
+the allowance is fine; say the figures were summed across those calls.
 
 An enabled policy lasts 1, 7 or 30 days, as the person chose on the access
 page. Email-code verification lasts 24 hours; an authenticator sign-in avoids
@@ -210,6 +214,45 @@ styles. When a result has `pageShortened: true`, the page was cut to fit the
 response size; continue from `nextOffset` if the person needs more. Never turn
 bounded pagination into a bulk export. Category rows carry `group_label`, the
 readable category name; show it instead of the code.
+
+`inventory_intelligence` reads the Inventory Intelligence dashboard views
+(intake, vendor journeys, Buying SOP lots, dead stock, replenishment, weekly
+exceptions, reconciliation, COGS ageing, SKU lifecycle, `slow_inventory`,
+`sold_vintage`). Receipt age there is age since the latest observed receipt,
+not shelf age; describe basket gaps without claiming causation. Intake totals,
+vendor journeys, SOP and chain SKU history need company access; replenishment
+and lifecycle take one store. Resolve missing filters, then run with
+`confirmed: true`.
+
+## Monthly sales, store P&L and loyalty
+
+`business_performance` is a separate opt-in that includes margins. Views:
+- `monthly_sales`: sales, bills, units and average bill per store-month (up to
+  24 months) with the same days last year and like-for-like growth (stores open
+  the whole of last year's month with sales then). Use it for month, quarter,
+  FY and versus-last-year questions; `groupBy: month` gives chain totals. Totals
+  cover only the selected, currently open stores, so last year excludes stores
+  that have since closed; say so when comparing with an older company figure. Use
+  `sales_summary` for a day or week, and `targets_summary` for target
+  achievement.
+- `category_sales`: ₹ sales, units and share by standard category group, up to
+  12 months (`groupBy: store_category` to split by store). For stock-based
+  sell-through use `category_sell_through` instead.
+- `top_styles`: one store, up to 31 days, ranked by sales or units, with
+  approved catalogue photos. Promotion bucket codes such as B1G1 or PROMO are
+  not single styles; say so rather than ranking them as one.
+- `store_pnl`: Finance MIS as booked - net sales, gross profit, gross margin %,
+  COGS, rent and store EBITDA, up to 24 months. Manpower is excluded; use
+  `salaries_monthly` for it and `rent_monthly` for rent by itself. Months after
+  `availableThrough` are not reported; never fill them from sales.
+- `loyalty_summary`: company loyalty P&L (rewards given, used and owed);
+  company scope only, so every active store must be approved.
+
+Sales views read a per-store-day rollup of numbered POS bills (no cancelled,
+draft, held or void bills) refreshed every three hours, from November 2024, so
+last-year figures exist from November 2025. Check `salesCoverage` and
+`through_date` and call a month partial when it is. Use `action: resolve`, then
+`run` with `confirmed: true` once view, months or dates and stores are known.
 
 ## Monthly salaries and rent
 

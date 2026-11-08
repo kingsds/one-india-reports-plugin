@@ -11,10 +11,10 @@ platform, business data, assets/icon.png and 1 India branding/trademarks are
 excluded from that license grant. No trademark rights are granted.
 
 
-## Download version 0.5.0
+## Download version 0.6.0
 
-- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.5.0/one-india-claude-plugin.zip)
-- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.5.0/one-india-openai-plugin.zip)
+- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.6.0/one-india-claude-plugin.zip)
+- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.6.0/one-india-openai-plugin.zip)
 
 For Claude, open **Customize > Plugins**, select the upload option and choose
 the Claude ZIP, then connect with your own 1 India account.
@@ -161,6 +161,18 @@ age. Scanned stock does not establish a truck booking, loading or departure.
 Installing or updating the plugin does not remove coding or developer tools.
 The reporting connection keeps its own approved scope and expiry.
 
+
+## New in 0.6.0: monthly sales, categories, store P&L and loyalty
+
+A new opt-in report, `business_performance`, with five views:
+
+- `monthly_sales`: up to 24 months per store with the same days last year and like-for-like growth, so quarter, financial-year and versus-last-year questions take one call.
+- `category_sales`: rupee sales, units and share by category group for up to 12 months.
+- `top_styles`: best-selling styles at one store over up to 31 days, with approved catalogue photos.
+- `store_pnl`: the Finance store P&L as booked (net sales, gross profit, gross margin, COGS, rent, store EBITDA). Manpower stays behind the salary approval.
+- `loyalty_summary`: the company loyalty P&L.
+
+Sales views read POS bills rolled up per store and day every three hours. They match Finance gross revenue month by month (for example 100.02% for October 2025). POS sales include GST; Finance net sales do not.
 
 ## New in 0.5.0: faster, clearer, safer answers
 
