@@ -172,7 +172,7 @@ A new opt-in report, `business_performance`, with five views:
 - `store_pnl`: the Finance store P&L as booked (net sales, gross profit, gross margin, COGS, rent, store EBITDA). Manpower stays behind the salary approval.
 - `loyalty_summary`: the company loyalty P&L.
 
-Sales views read POS bills rolled up per store and day every three hours. They match Finance gross revenue month by month (for example 100.02% for October 2025). POS sales include GST; Finance net sales do not.
+Sales views read POS bills rolled up per store and day every three hours. They normally track Finance gross revenue closely (for example 100.02% for October 2025), but differ for March to August 2026; the report lists those differences in `dataNotes`. POS sales include GST; Finance net sales do not.
 
 ## New in 0.5.0: faster, clearer, safer answers
 
