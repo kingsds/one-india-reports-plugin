@@ -11,10 +11,10 @@ platform, business data, assets/icon.png and 1 India branding/trademarks are
 excluded from that license grant. No trademark rights are granted.
 
 
-## Download version 0.6.0
+## Download version 0.6.1
 
-- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.6.0/one-india-claude-plugin.zip)
-- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.6.0/one-india-openai-plugin.zip)
+- [Claude plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.6.1/one-india-claude-plugin.zip)
+- [OpenAI plugin ZIP](https://github.com/kingsds/one-india-reports-plugin/releases/download/v0.6.1/one-india-openai-plugin.zip)
 
 For Claude, open **Customize > Plugins**, select the upload option and choose
 the Claude ZIP, then connect with your own 1 India account.
@@ -161,6 +161,15 @@ age. Scanned stock does not establish a truck booking, loading or departure.
 Installing or updating the plugin does not remove coding or developer tools.
 The reporting connection keeps its own approved scope and expiry.
 
+
+## New in 0.6.1: one stock vocabulary
+
+Stock answers now use the same words as the 1 India platform and store team:
+shops by default (the warehouse only when you ask), stock in transit shown
+separately with any held lot and its reason, Ginesys season words (Regular,
+Summer, Pre-winter, Winter, Promo, Not tagged) and delisted articles counted in
+their season and shown separately. "How old is the stock" is answered from the
+age × season view. No new reports or permissions; reconnect is not required.
 
 ## New in 0.6.0: monthly sales, categories, store P&L and loyalty
 

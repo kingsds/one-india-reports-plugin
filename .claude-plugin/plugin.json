@@ -1,7 +1,7 @@
 {
   "name": "one-india-platform",
   "displayName": "1 India Reports",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Read approved 1 India Family Mart retail reports: sales and targets, footfall, stock ageing with cost values, Inventory Intelligence, dispatch progress with order values, purchase-cohort sell-through, catalogue photos, monthly sales vs last year, store P&L with margins, loyalty summary, monthly booked rent and salary (named salary approval required).",
   "author": {
     "name": "1 India",
