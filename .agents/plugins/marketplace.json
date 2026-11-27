@@ -1,11 +1,19 @@
 {
   "name": "one-india",
-  "interface": { "displayName": "1 India Reports" },
+  "interface": {
+    "displayName": "1 India Reports"
+  },
   "plugins": [
     {
       "name": "one-india-platform",
-      "source": { "source": "local", "path": "./" },
-      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     }
   ]

@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "one-india-platform",
-  "version": "0.6.1",
-  "description": "Read approved 1 India Family Mart retail reports: sales and targets, footfall, stock ageing with cost values, Inventory Intelligence, dispatch progress with order values, purchase-cohort sell-through, catalogue photos, monthly sales vs last year, store P&L with margins, loyalty summary, monthly booked rent and salary (named salary approval required).",
+  "version": "0.7.0",
+  "description": "Read approved 1 India Family Mart retail reports: sales and targets, monthly target pace, store closures, footfall, stock and stock ageing with cost values, Inventory Intelligence, dispatch progress, sell-through, category and season sales, the buying plan and store health reviews, catalogue photos, monthly sales vs last year, store P&L, loyalty summary, shop cash and day-end checks, booked rent and salary (named salary approval required).",
   "author": {
     "name": "1 India",
     "url": "https://1-india-loyalty-six.vercel.app",
@@ -24,20 +24,20 @@
       "interface": {
         "displayName": "1 India Reports",
         "shortDescription": "Approved retail reports",
-        "longDescription": "Read your approved 1 India stores' sales, targets, footfall, category stock and sell-through. Separately approved reports add stock ageing with stock cost values, warehouse dispatch progress with order-rate/MRP values, company purchase-cohort sell-through, Inventory Intelligence and slow stock, catalogue styles and photos, monthly sales versus last year, category sales, top styles, Finance MIS store P&L with margins, the company loyalty summary, Finance booked rent and monthly salary. Salary needs the platform's named salary-access approval, rechecked on every call, and can include individual employee pay for those approved viewers; bank, tax and contact details are never returned. Share a short unanswered question with the connector owner only after confirming the exact summary. Your own login, selected reports and store scope are required; business records stay read-only.",
+        "longDescription": "Ask plain questions about your approved 1 India stores and get answers from the platform's own reports: sales, targets and the daily pace needed to hit this month's target, which stores were closed, footfall, stock and how old it is, sell-through, category and season sales, warehouse dispatch progress, the buying plan review and a full Store Health Review. Separately approved reports add stock cost values, Inventory Intelligence, monthly sales against last year, Finance store P&L with margins, the company loyalty summary, shop cash book and day-end checks, Finance booked rent and monthly salary. Salary needs the platform's named salary-access approval, rechecked on every call; bank, tax and contact details are never returned. You sign in with your own account and choose your stores and reports; business records stay read-only. If a report cannot answer a question, the assistant can save a short summary for the owner after you confirm the exact text.",
         "developerName": "1 India",
         "category": "Productivity",
         "capabilities": [
-          "Read approved retail sales, targets and stock reports",
-          "Read stock cost values and dispatch order values",
+          "Read approved retail sales, targets, closures and stock reports",
+          "Read stock cost values, ageing and dispatch order values",
           "Read monthly sales vs last year, store P&L and loyalty summary",
-          "Read monthly booked rent and salary (named approval)"
+          "Read shop cash, booked rent and salary (named approval)"
         ],
         "websiteURL": "https://1-india-loyalty-six.vercel.app",
         "defaultPrompt": [
-          "Check my 1 India AI access and show the reports and stores I can use.",
-          "Compare sales against targets and category sell-through for one approved store last week.",
-          "Show me a redacted summary of any unanswered report question and ask before saving it."
+          "Check my 1 India access and show the reports and stores I can use.",
+          "How did Banda do last week against target, with category sell-through?",
+          "What is this month's target for my stores and the daily pace we need?"
         ],
         "composerIcon": "./assets/icon.png",
         "logo": "./assets/icon.png"

@@ -1,0 +1,14 @@
+{
+  "name": "one-india-platform",
+  "version": "0.7.0",
+  "description": "Read approved 1 India Family Mart retail reports: sales and targets, monthly target pace, store closures, footfall, stock and stock ageing with cost values, Inventory Intelligence, dispatch progress, sell-through, category and season sales, the buying plan and store health reviews, catalogue photos, monthly sales vs last year, store P&L, loyalty summary, shop cash and day-end checks, booked rent and salary (named salary approval required).",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "one-india-platform": {
+      "httpUrl": "https://1-india-loyalty-six.vercel.app/mcp",
+      "oauth": {
+        "enabled": true
+      }
+    }
+  }
+}
